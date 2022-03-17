@@ -9,7 +9,7 @@ require 'active_support/time'
 require 'write_xlsx'
 
 
-$url_shop = "http://idealsoftexportaweb.eastus.cloudapp.azure.com:60500".freeze
+$url_shop = "http://idealsoftexportaweb.eastus.cloudapp.azure.com:60500".freez
 
 def token
     url = URI("#{$url_shop}/auth/?serie=HIEAPA-600759-ROCT&codfilial=2")
@@ -48,7 +48,7 @@ $signature = Base64.strict_encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sh
 
 #Get CLIENTES
 
-#clientes = RestClient.get("#{$url_shop}/produtos/1", header={'Authorization': "#{$token}", 'Signature': "#{$signature}", 'CodFilial': '2', 'Timestamp': "#{$time}"})        
+#clientes = RestClient.get("#{$url_shop}/produtos/1", header={'Authorization': "#{$token}", 'Signature': "#{$signature}", 'CodFilial': '2', 'Timestamp': "#{$time}"})
 workbook = WriteXLSX.new('produtos.xlsx')
 
 ind = 1
@@ -77,13 +77,13 @@ while ind <= 10000000 do
 
     response = http.request(request)
     return_resp = JSON.parse(response.read_body)
-    
+
     if return_resp['tipo'] == "FIM_DE_PAGINA"
         puts "ULTIMA PAGINA"
         puts ind
         ind = 10000001
     else
-        
+
         return_resp['dados'].each do |produto|
             worksheet.write(row, 0, produto['nome'])
             worksheet.write(row, 1, produto['codigo'])
@@ -100,4 +100,3 @@ end
 workbook.close
 debugger
 x = 1
-
